@@ -164,6 +164,33 @@ class Ipv4Network  {
     overlaps(network) {
         return (((network.address.integer() & network.netmask().integer()) <= (this.address.integer() | ~this.netmask().integer())) && ((this.address.integer() & this.netmask().integer()) <= (network.address.integer() | ~network.netmask().integer())));
     }
+
+    /**
+     * Checks if two networks are contiguous
+     * @param {Ipv4Network} network the network to check against
+     * @returns true if the network is congituous, false otherwise
+     */
+    isContiguous(network) {
+        return Math.abs(this.first().integer() - network.last().integer) == 1 || 
+            Math.abs(this.last().integer() - network.first().integer()) == 1
+    }
+
+    /**
+     * Merges two networks in to a larger network
+     * @param {Ipv4Network} network the network to merge with this one
+     * @returns a new, merged network
+     */
+    merge(network) {
+        if(!this.isContiguous(network)) {
+            throw Error("Address space must be congiguous in order to merge networks");
+        }
+        if(this.prefixlen != network.prefixlen) {
+            throw Error("Networks must be the same prefix length in order to merge");
+        }
+        return new Ipv4Network(
+            new Ipv4Address(Math.min(this.address.integer(), network.address.integer())), this.prefixlen - 1
+        );
+    }
 }
 
 /**
