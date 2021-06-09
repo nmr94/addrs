@@ -1,6 +1,6 @@
 {
   "name": "addrs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Allows manipulation of IP addresses and IP networks.",
   "main": "addrs.js",
   "scripts": {
