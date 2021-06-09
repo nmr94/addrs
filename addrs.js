@@ -171,7 +171,7 @@ class Ipv4Network  {
      * @returns true if the network is congituous, false otherwise
      */
     isContiguous(network) {
-        return Math.abs(this.first().integer() - network.last().integer) == 1 || 
+        return Math.abs(this.first().integer() - network.last().integer()) == 1 || 
             Math.abs(this.last().integer() - network.first().integer()) == 1
     }
 
